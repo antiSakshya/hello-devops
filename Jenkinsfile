@@ -3,14 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/antiSakshya/hello-devops.git'
+                git 'https://github.com/antiSakshya/hello-devops.git'
             }
         }
 
-        stage('Build App') {
+        stage('Build') {
             steps {
+                sh 'chmod +x mvnw'
                 sh './mvnw clean package -DskipTests'
             }
         }
@@ -21,10 +22,5 @@ pipeline {
             }
         }
 
-        stage('Docker Run Test') {
-            steps {
-                sh 'docker run -d -p 8081:8080 hello-devops'
-            }
-        }
     }
 }
